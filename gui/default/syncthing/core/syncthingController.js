@@ -51,6 +51,7 @@ angular.module('syncthing.core')
         $scope.failedPageSize = 10;
         $scope.scanProgress = {};
         $scope.themes = [];
+        $scope.localChangeEvents = {};
 
         $scope.localStateTotal = {
             bytes: 0,
@@ -186,6 +187,7 @@ angular.module('syncthing.core')
 
         $scope.$on(Events.LOCAL_INDEX_UPDATED, function (event, arg) {
             refreshFolderStats();
+            refreshLastLocalChanges();
         });
 
         $scope.$on(Events.DEVICE_DISCONNECTED, function (event, arg) {
@@ -626,6 +628,22 @@ angular.module('syncthing.core')
         var refreshThemes = debounce(function () {
             $http.get("themes.json").success(function (data) { // no urlbase here as this is served by the asset handler
                 $scope.themes = data.themes;
+            }).error($scope.emitHTTPError);
+        }, 2500);
+
+        var refreshLastLocalChanges = debounce(function () {
+            $http.get(urlbase + "/events/disk?limit=10").success(function (data) {
+                $scope.localChangeEvents = data;
+                for (i = 0; i < $scope.localChangeEvents.length; i++) {
+                    // Remove full path for display
+                    var path = $scope.localChangeEvents[i].data.path
+                    $scope.localChangeEvents[i].data.path = path.substring(path.lastIndexOf("\\") + 1);
+
+                    if ($scope.localChangeEvents[i].time) {
+                        $scope.localChangeEvents[i].time = new Date($scope.localChangeEvents[i].time);
+                    }
+                }
+                console.log("refreshLastLocalChanges", data);
             }).error($scope.emitHTTPError);
         }, 2500);
 
