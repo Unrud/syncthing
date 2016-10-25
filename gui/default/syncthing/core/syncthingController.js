@@ -634,6 +634,7 @@ angular.module('syncthing.core')
         var refreshLastLocalChanges = debounce(function () {
             $http.get(urlbase + "/events/disk?limit=10").success(function (data) {
                 $scope.localChangeEvents = data;
+                $scope.localChangeEventLog = "";
                 for (i = 0; i < $scope.localChangeEvents.length; i++) {
                     // Remove full path for display
                     var path = $scope.localChangeEvents[i].data.path
@@ -642,6 +643,11 @@ angular.module('syncthing.core')
                     if ($scope.localChangeEvents[i].time) {
                         $scope.localChangeEvents[i].time = new Date($scope.localChangeEvents[i].time);
                     }
+
+                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.type + " ";
+                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.action + " ";
+                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.path + " @ ";
+                    $scope.localChangeEventLog += $scope.localChangeEvents[i].time.toLocaleString() + "<br>";
                 }
                 console.log("refreshLastLocalChanges", data);
             }).error($scope.emitHTTPError);
