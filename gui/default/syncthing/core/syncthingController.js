@@ -634,21 +634,25 @@ angular.module('syncthing.core')
         var refreshLastLocalChanges = debounce(function () {
             $http.get(urlbase + "/events/disk?limit=10").success(function (data) {
                 $scope.localChangeEvents = data;
-                $scope.localChangeEventLog = "";
+                $scope.localChangeEventLog = "<table>";
                 for (i = 0; i < $scope.localChangeEvents.length; i++) {
                     // Remove full path for display
-                    var path = $scope.localChangeEvents[i].data.path
-                    $scope.localChangeEvents[i].data.path = path.substring(path.lastIndexOf("\\") + 1);
+                    // var path = $scope.localChangeEvents[i].data.path
+                    // $scope.localChangeEvents[i].data.path = path.substring(path.lastIndexOf("\\") + 1);
 
                     if ($scope.localChangeEvents[i].time) {
                         $scope.localChangeEvents[i].time = new Date($scope.localChangeEvents[i].time);
                     }
 
-                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.type + " ";
-                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.action + " ";
-                    $scope.localChangeEventLog += $scope.localChangeEvents[i].data.path + " @ ";
-                    $scope.localChangeEventLog += $scope.localChangeEvents[i].time.toLocaleString() + "<br>";
+                    $scope.localChangeEventLog += "<tr>";
+                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.type + "</td>";
+                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.action + "</td>";
+                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.path + "</td>";
+                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].time.toLocaleString() + "</td>";
+                    $scope.localChangeEventLog += "</tr>";
                 }
+                $scope.localChangeEventLog += "</table>";
+
                 console.log("refreshLastLocalChanges", data);
             }).error($scope.emitHTTPError);
         }, 2500);
@@ -1285,6 +1289,10 @@ angular.module('syncthing.core')
                     $scope.folderEditor = form;
                     break;
             }
+        }
+
+        $scope.localChangeLog = function () {
+            $('#localChangeLog').modal();
         }
 
         $scope.editFolder = function (folderCfg) {

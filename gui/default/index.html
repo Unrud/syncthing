@@ -392,13 +392,6 @@
                         <span>{{folderStats[folder.id].lastScan | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                       </td>
                     </tr>
-                    <tr>
-                      <th><span class="fa fa-fw fa-exchange"></span>&nbsp;<span translate>Last Local Changes</span></th>
-                        <td class="text-right">
-                          <span tooltip data-original-title="{{localChangeEventLog}}">
-                          {{localChangeEvents[localChangeEvents.length-1].data.path}}
-                        </td>
-                    </tr>
                     <tr ng-if="folder.type != 'readonly' && folderStats[folder.id].lastFile && folderStats[folder.id].lastFile.filename">
                       <th><span class="fa fa-fw fa-exchange"></span>&nbsp;<span translate>Last File Received</span></th>
                       <td class="text-right">
@@ -508,6 +501,15 @@
                     <th><span class="fa fa-fw fa-clock-o"></span>&nbsp;<span translate>Uptime</span></th>
                     <td class="text-right">{{system.uptime | duration:"m"}}</td>
                   </tr>
+                  <!--<tr>
+                    <th><span class="fa fa-fw fa-exchange"></span>&nbsp;<span translate>Last Local Changes</span></th>
+                    <td class="text-right">
+                      <span tooltip data-original-title="{{localChangeLog}}">
+                      {{localChangeEvents[localChangeEvents.length-1].data.path}}
+                      </span>
+                      <a ng-href="localChangeLog()">{{localChangeEvents[localChangeEvents.length-1].data.path}}</a>
+                    </td>
+                  </tr>-->
                   <tr>
                     <th><span class="fa fa-fw fa-tag"></span>&nbsp;<span translate>Version</span></th>
                     <td class="text-right">
@@ -516,6 +518,13 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="panel-footer">
+              <span class="pull-right">
+                <button type="button" class="btn btn-sm btn-default" ng-click="localChangeLog()">
+                  <span class="fa fa-fw fa-exchange"></span>&nbsp;<span translate>Last Local Changes</span>
+                </button>
+              </span>
             </div>
           </div>
         </div>
@@ -647,6 +656,7 @@
   <ng-include src="'syncthing/core/shutdownDialogView.html'"></ng-include>
   <ng-include src="'syncthing/device/idqrModalView.html'"></ng-include>
   <ng-include src="'syncthing/device/editDeviceModalView.html'"></ng-include>
+  <ng-include src="'syncthing/device/changeLogModalView.html'"></ng-include>
   <ng-include src="'syncthing/folder/editFolderModalView.html'"></ng-include>
   <ng-include src="'syncthing/folder/editIgnoresModalView.html'"></ng-include>
   <ng-include src="'syncthing/settings/settingsModalView.html'"></ng-include>
