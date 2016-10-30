@@ -1273,8 +1273,8 @@ angular.module('syncthing.core')
             }
         }
 
-        $scope.localChangeLog = function () {
-            $('#localChangeLog').modal();
+        $scope.localDiskChanges = function () {
+            $('#localDiskChanges').modal();
         }
 
         $scope.editFolder = function (folderCfg) {

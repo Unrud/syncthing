@@ -1,16 +1,16 @@
 <style> th, td { padding: 3px; } </style>
-<modal id="localChangeLog" status="default" icon="{{'exchange'}}" heading="{{'Local Changes' | translate}}" large="yes" closeable="yes">
+<modal id="localDiskChanges" status="default" icon="{{'history'}}" heading="{{'Last Changes' | translate}}" large="yes" closeable="yes">
     <div class="modal-body">
         <table>
           <tr>
-            <th>&nbsp;Type&nbsp;</th>
-            <th>&nbsp;Action&nbsp;</th>
-            <th>&nbsp;Path&nbsp;</th>
-            <th>&nbsp;Time&nbsp;</th>
+            <th translate>Type</th>
+            <th translate>Action</th>
+            <th translate>Path</th>
+            <th translate>Time</th>
           </tr>
           <tr ng-repeat="ChangeLog in localChangeEvents">
-            <td>&nbsp;{{ChangeLog.data.type}}&nbsp;</td>
-            <td>&nbsp;{{ChangeLog.data.action}}&nbsp;</td>
+            <td translate>&nbsp;{{ChangeLog.data.type}}&nbsp;</td>
+            <td translate>&nbsp;{{ChangeLog.data.action}}&nbsp;</td>
             <td>&nbsp;{{ChangeLog.data.path}}&nbsp;</td>
             <td>&nbsp;{{ChangeLog.time | date:'medium'}}&nbsp;</td>
           </tr>
