@@ -632,26 +632,8 @@ angular.module('syncthing.core')
         }, 2500);
 
         var refreshLastLocalChanges = debounce(function () {
-            $http.get(urlbase + "/events/disk?limit=10").success(function (data) {
+            $http.get(urlbase + "/events/disk?limit=20").success(function (data) {
                 $scope.localChangeEvents = data;
-                $scope.localChangeEventLog = "<table>";
-                for (i = 0; i < $scope.localChangeEvents.length; i++) {
-                    // Remove full path for display
-                    // var path = $scope.localChangeEvents[i].data.path
-                    // $scope.localChangeEvents[i].data.path = path.substring(path.lastIndexOf("\\") + 1);
-
-                    if ($scope.localChangeEvents[i].time) {
-                        $scope.localChangeEvents[i].time = new Date($scope.localChangeEvents[i].time);
-                    }
-
-                    $scope.localChangeEventLog += "<tr>";
-                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.type + "</td>";
-                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.action + "</td>";
-                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].data.path + "</td>";
-                    $scope.localChangeEventLog += "<td>" + $scope.localChangeEvents[i].time.toLocaleString() + "</td>";
-                    $scope.localChangeEventLog += "</tr>";
-                }
-                $scope.localChangeEventLog += "</table>";
 
                 console.log("refreshLastLocalChanges", data);
             }).error($scope.emitHTTPError);
