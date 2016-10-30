@@ -1,4 +1,4 @@
-<style> th, td { padding: 3px; } </style>
+<style> th, td { padding: 8px; } </style>
 <modal id="localDiskChanges" status="default" icon="{{'history'}}" heading="{{'Last Changes' | translate}}" large="yes" closeable="yes">
     <div class="modal-body">
         <table>
@@ -8,11 +8,11 @@
             <th translate>Path</th>
             <th translate>Time</th>
           </tr>
-          <tr ng-repeat="ChangeLog in localChangeEvents">
-            <td translate>&nbsp;{{ChangeLog.data.type}}&nbsp;</td>
-            <td translate>&nbsp;{{ChangeLog.data.action}}&nbsp;</td>
-            <td>&nbsp;{{ChangeLog.data.path}}&nbsp;</td>
-            <td>&nbsp;{{ChangeLog.time | date:'medium'}}&nbsp;</td>
+          <tr ng-repeat="localChangeEvent in localChangeEvents">
+            <td>{{localChangeEvent.data.type}}</td>
+            <td>{{localChangeEvent.data.action}}</td>
+            <td>{{localChangeEvent.data.path}}</td>
+            <td>{{localChangeEvent.time | date:'medium'}}</td>
           </tr>
         </table>
     </div>
