@@ -1,16 +1,18 @@
-<style> th, td { padding: 8px; } </style>
-<modal id="localDiskChanges" status="default" icon="{{'history'}}" heading="{{'Last Changes' | translate}}" large="yes" closeable="yes">
+<style> th, td { padding: 6px; } </style>
+<modal id="localDiskChanges" status="default" icon="{{'history'}}" heading="{{'Global Changes' | translate}}" large="yes" closeable="yes">
     <div class="modal-body">
         <table>
           <tr>
-            <th translate>Type</th>
+            <th translate>Device</th>
             <th translate>Action</th>
+            <th translate>Type</th>
             <th translate>Path</th>
             <th translate>Time</th>
           </tr>
           <tr ng-repeat="localChangeEvent in localChangeEvents">
-            <td>{{localChangeEvent.data.type}}</td>
+            <td>{{localChangeEvent.data.lastModBy}}</td>
             <td>{{localChangeEvent.data.action}}</td>
+            <td>{{localChangeEvent.data.type}}</td>
             <td>{{localChangeEvent.data.path}}</td>
             <td>{{localChangeEvent.time | date:'medium'}}</td>
           </tr>
