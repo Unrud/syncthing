@@ -1543,21 +1543,21 @@ func (m *Model) diskChangeDetected(folderCfg config.FolderConfiguration, files [
 
 		if localChange {
 			events.Default.Log(events.LocalChangeDetected, map[string]string{
-				"lastModifiedBy": file.LastModifiedBy.String(),
 				"folderID":       folderCfg.ID,
 				"label":          folderCfg.Label,
 				"action":         action,
 				"type":           objType,
 				"path":           path,
+				"lastModifiedBy": file.LastModifiedBy.String(),
 			})
 		} else {
 			events.Default.Log(events.RemoteChangeDetected, map[string]string{
-				"lastModifiedBy": file.LastModifiedBy.String(),
 				"folderID":       folderCfg.ID,
 				"label":          folderCfg.Label,
 				"action":         action,
 				"type":           objType,
 				"path":           path,
+				"lastModifiedBy": file.LastModifiedBy.String(),
 			})
 		}
 	}
