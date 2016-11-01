@@ -1465,9 +1465,9 @@ func sendIndexTo(minSequence int64, conn protocol.Connection, folder string, fs 
 
 func (m *Model) updateLocalsFromScanning(folder string, fs []protocol.FileInfo) {
 	// If we're running this code it's because our node last add/moved/changed
-	// this file.  So we set LastModBy to our devices friendly name
+	// this file.  So we set LastModifiedBy to our devices friendly name
 	for i := range fs {
-		fs[i].LastModBy = m.deviceName
+		fs[i].LastModifiedBy = m.id
 	}
 	m.updateLocals(folder, fs)
 
@@ -1475,21 +1475,18 @@ func (m *Model) updateLocalsFromScanning(folder string, fs []protocol.FileInfo) 
 	folderCfg := m.folderCfgs[folder]
 	m.fmut.RUnlock()
 
-	// Fire the LocalChangeDetected event to notify listeners about local updates.
-	localChange := true
-	m.diskChangeDetected(folderCfg, fs, localChange)
+	m.diskChangeDetected(folderCfg, fs, true) // localChange = true
 }
 
 func (m *Model) updateLocalsFromPulling(folder string, fs []protocol.FileInfo) {
-	// This is not our change so we dont set fileinfo.LastModBy here
+	// This is not our change so we dont set fileinfo.LastModifiedBy here
 	m.updateLocals(folder, fs)
 
 	m.fmut.RLock()
 	folderCfg := m.folderCfgs[folder]
 	m.fmut.RUnlock()
 
-	localChange := false
-	m.diskChangeDetected(folderCfg, fs, localChange)
+	m.diskChangeDetected(folderCfg, fs, false) // localChange = false
 }
 
 func (m *Model) updateLocals(folder string, fs []protocol.FileInfo) {
@@ -1546,21 +1543,21 @@ func (m *Model) diskChangeDetected(folderCfg config.FolderConfiguration, files [
 
 		if localChange {
 			events.Default.Log(events.LocalChangeDetected, map[string]string{
-				"lastModBy": file.LastModBy,
-				"folderID":  folderCfg.ID,
-				"label":     folderCfg.Label,
-				"action":    action,
-				"type":      objType,
-				"path":      path,
+				"lastModifiedBy": file.LastModifiedBy.String(),
+				"folderID":       folderCfg.ID,
+				"label":          folderCfg.Label,
+				"action":         action,
+				"type":           objType,
+				"path":           path,
 			})
 		} else {
 			events.Default.Log(events.RemoteChangeDetected, map[string]string{
-				"lastModBy": file.LastModBy,
-				"folderID":  folderCfg.ID,
-				"label":     folderCfg.Label,
-				"action":    action,
-				"type":      objType,
-				"path":      path,
+				"lastModifiedBy": file.LastModifiedBy.String(),
+				"folderID":       folderCfg.ID,
+				"label":          folderCfg.Label,
+				"action":         action,
+				"type":           objType,
+				"path":           path,
 			})
 		}
 	}
