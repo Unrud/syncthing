@@ -291,19 +291,19 @@ func (*IndexUpdate) ProtoMessage()               {}
 func (*IndexUpdate) Descriptor() ([]byte, []int) { return fileDescriptorBep, []int{6} }
 
 type FileInfo struct {
-	Name           string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Type           FileInfoType `protobuf:"varint,2,opt,name=type,proto3,enum=protocol.FileInfoType" json:"type,omitempty"`
-	Size           int64        `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
-	Permissions    uint32       `protobuf:"varint,4,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	ModifiedS      int64        `protobuf:"varint,5,opt,name=modified_s,json=modifiedS,proto3" json:"modified_s,omitempty"`
-	ModifiedNs     int32        `protobuf:"varint,11,opt,name=modified_ns,json=modifiedNs,proto3" json:"modified_ns,omitempty"`
-	LastModifiedBy DeviceID     `protobuf:"bytes,12,opt,name=lastmodifiedby,proto3" json:"lastmodifiedby,omitempty"`
-	Deleted        bool         `protobuf:"varint,6,opt,name=deleted,proto3" json:"deleted,omitempty"`
-	Invalid        bool         `protobuf:"varint,7,opt,name=invalid,proto3" json:"invalid,omitempty"`
-	NoPermissions  bool         `protobuf:"varint,8,opt,name=no_permissions,json=noPermissions,proto3" json:"no_permissions,omitempty"`
-	Version        Vector       `protobuf:"bytes,9,opt,name=version" json:"version"`
-	Sequence       int64        `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	Blocks         []BlockInfo  `protobuf:"bytes,16,rep,name=Blocks,json=blocks" json:"Blocks"`
+	Name          string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Type          FileInfoType `protobuf:"varint,2,opt,name=type,proto3,enum=protocol.FileInfoType" json:"type,omitempty"`
+	Size          int64        `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	Permissions   uint32       `protobuf:"varint,4,opt,name=permissions,proto3" json:"permissions,omitempty"`
+	ModifiedS     int64        `protobuf:"varint,5,opt,name=modified_s,json=modifiedS,proto3" json:"modified_s,omitempty"`
+	ModifiedNs    int32        `protobuf:"varint,11,opt,name=modified_ns,json=modifiedNs,proto3" json:"modified_ns,omitempty"`
+	ModifiedBy    ShortID      `protobuf:"bytes,12,opt,name=modified_by,proto3" json:"modified_by,omitempty"`
+	Deleted       bool         `protobuf:"varint,6,opt,name=deleted,proto3" json:"deleted,omitempty"`
+	Invalid       bool         `protobuf:"varint,7,opt,name=invalid,proto3" json:"invalid,omitempty"`
+	NoPermissions bool         `protobuf:"varint,8,opt,name=no_permissions,json=noPermissions,proto3" json:"no_permissions,omitempty"`
+	Version       Vector       `protobuf:"bytes,9,opt,name=version" json:"version"`
+	Sequence      int64        `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Blocks        []BlockInfo  `protobuf:"bytes,16,rep,name=Blocks,json=blocks" json:"Blocks"`
 }
 
 func (m *FileInfo) Reset()                    { *m = FileInfo{} }

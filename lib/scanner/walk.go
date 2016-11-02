@@ -325,6 +325,7 @@ func (w *walker) walkRegular(relPath string, info os.FileInfo, fchan chan protoc
 		NoPermissions: w.IgnorePerms,
 		ModifiedS:     info.ModTime().Unix(),
 		ModifiedNs:    int32(info.ModTime().Nanosecond()),
+		ModifiedBy:    w.Config.ShortID,
 		Size:          info.Size(),
 	}
 	l.Debugln("to hash:", relPath, f)
@@ -360,6 +361,7 @@ func (w *walker) walkDir(relPath string, info os.FileInfo, dchan chan protocol.F
 		NoPermissions: w.IgnorePerms,
 		ModifiedS:     info.ModTime().Unix(),
 		ModifiedNs:    int32(info.ModTime().Nanosecond()),
+		ModifiedBy:    w.Config.ShortID,
 	}
 	l.Debugln("dir:", relPath, f)
 

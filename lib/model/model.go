@@ -1464,11 +1464,6 @@ func sendIndexTo(minSequence int64, conn protocol.Connection, folder string, fs 
 }
 
 func (m *Model) updateLocalsFromScanning(folder string, fs []protocol.FileInfo) {
-	// If we're running this code it's because our node last add/moved/changed
-	// this file.  So we set LastModifiedBy to our devices friendly name
-	for i := range fs {
-		fs[i].LastModifiedBy = m.id
-	}
 	m.updateLocals(folder, fs)
 
 	m.fmut.RLock()
@@ -1479,7 +1474,6 @@ func (m *Model) updateLocalsFromScanning(folder string, fs []protocol.FileInfo) 
 }
 
 func (m *Model) updateLocalsFromPulling(folder string, fs []protocol.FileInfo) {
-	// This is not our change so we dont set fileinfo.LastModifiedBy here
 	m.updateLocals(folder, fs)
 
 	m.fmut.RLock()
@@ -1543,21 +1537,21 @@ func (m *Model) diskChangeDetected(folderCfg config.FolderConfiguration, files [
 
 		if localChange {
 			events.Default.Log(events.LocalChangeDetected, map[string]string{
-				"folderID":       folderCfg.ID,
-				"label":          folderCfg.Label,
-				"action":         action,
-				"type":           objType,
-				"path":           path,
-				"lastModifiedBy": file.LastModifiedBy.String(),
+				"folderID":   folderCfg.ID,
+				"label":      folderCfg.Label,
+				"action":     action,
+				"type":       objType,
+				"path":       path,
+				"modifiedBy": file.ModifiedBy.String(),
 			})
 		} else {
 			events.Default.Log(events.RemoteChangeDetected, map[string]string{
-				"folderID":       folderCfg.ID,
-				"label":          folderCfg.Label,
-				"action":         action,
-				"type":           objType,
-				"path":           path,
-				"lastModifiedBy": file.LastModifiedBy.String(),
+				"folderID":   folderCfg.ID,
+				"label":      folderCfg.Label,
+				"action":     action,
+				"type":       objType,
+				"path":       path,
+				"modifiedBy": file.ModifiedBy.String(),
 			})
 		}
 	}
